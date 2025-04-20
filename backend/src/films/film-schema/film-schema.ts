@@ -30,6 +30,7 @@ export class Film {
     price: number;
     taken: string[];
   }[];
+  schedules: any;
 }
 
 export const FilmsSchema = SchemaFactory.createForClass(Film);
