@@ -1,42 +1,46 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { ordersDto } from '../dto/order.dto';
 import { Film } from '../../films/film-schema/film-schema';
-import { Model } from 'mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Schedule } from '../order-schema/order-schema-sql';
 
 @Injectable()
 export class OrdersService {
-  constructor(@InjectModel(Film.name) private orderModel: Model<Film>) {}
+  constructor(
+    @InjectRepository(Film)
+    private filmRepository: Repository<Film>,
+    @InjectRepository(Schedule)
+    private scheduleRepository: Repository<Schedule>,
+  ) {}
 
   async createOrder(OrdersDto: ordersDto) {
-    const items = [];
-    for (const ticket of OrdersDto.tickets) {
-      const newOrders = await this.orderModel.findOne({ id: ticket.film });
+    const ticketsArray = OrdersDto.tickets;
+    let items = [];
 
-      const order = newOrders.schedule.filter(
-        (item) => item.id == ticket.session,
-      );
+    for (const ticket of ticketsArray) {
+      const filmDate = await this.scheduleRepository.findOne({
+        where: {
+          id: ticket.session,
+        },
+      });
 
-      order[0].taken.push(`${ticket.row}:${ticket.seat}`);
+      if (!filmDate) {
+        throw new Error(`Film with id ${ticket.film} not found`);
+      }
 
-      const ordersUpdate = newOrders.schedule.filter(
-        (item) => item.id !== ticket.session,
-      );
+      const place = `${ticket.row}:${ticket.seat}`;
 
-      ordersUpdate.push(order[0]);
-      items.push(order[0]);
+      if (filmDate.taken == '') {
+        filmDate.taken = place;
+      } else {
+        filmDate.taken = `${filmDate.taken}, ${place}`;
+      }
 
-      newOrders.schedule = ordersUpdate;
+      await this.scheduleRepository.save(filmDate);
 
-      await this.orderModel.updateOne(
-        { id: newOrders.id },
-        { schedule: newOrders.schedule },
-      );
+      items = [...items, filmDate];
     }
-
-    return {
-      total: items.length,
-      items: items,
-    };
+    return { total: items.length, items: items };
   }
 }
