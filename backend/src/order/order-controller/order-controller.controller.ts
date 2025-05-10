@@ -6,8 +6,8 @@ import { ordersDto } from '../dto/order.dto';
 export class OrderControllerController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @Post() // POST /order
-  createOrder(@Body(/* ValidationPipe */) OrderDto: ordersDto) {
+  @Post() 
+  createOrder(@Body() OrderDto: ordersDto) {
     return this.ordersService.createOrder(OrderDto);
   }
 }

@@ -1,14 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Film } from '../film-schema/film-schema';
-import { Model } from 'mongoose';
+import { Film } from '../film-schema/film-schema-sql';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Schedule } from 'src/order/order-schema/order-schema-sql';
 
 @Injectable()
 export class FilmsService {
-  constructor(@InjectModel(Film.name) private filmModel: Model<Film>) {}
+  constructor(
+    @InjectRepository(Film)
+    private filmRepository: Repository<Film>,
+    @InjectRepository(Schedule)
+    private scheduleRepository: Repository<Schedule>,
+  ){}
 
   async findAll() {
-    const films = await this.filmModel.find();
+    const films = await this.filmRepository.find();
 
     return {
       total: films.length,
@@ -16,13 +22,21 @@ export class FilmsService {
     };
   }
 
-  async findOne(id) {
-    const film = await this.filmModel.findOne({ id });
-    if (!film) throw new NotFoundException('Film Not found');
+  async find(id: string) {
+    const data = await this.scheduleRepository.find({
+      where: { filmId: id },
+    });
+
+    const schedule = data.map((item) => {
+      return {
+        ...item,
+        taken: item.taken.split(', '),
+      };
+    });
 
     return {
-      total: film.schedule.length,
-      items: film.schedule,
+      total: schedule.length,
+      items: schedule,
     };
   }
 }

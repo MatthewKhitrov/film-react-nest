@@ -1,5 +1,4 @@
 //TODO реализовать DTO для /orders
-import { IsString, IsNumber, IsArray, IsNotEmpty } from 'class-validator';
 
 export class ordersDto {
   email: string;
