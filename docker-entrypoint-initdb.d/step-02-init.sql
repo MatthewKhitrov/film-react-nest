@@ -41,7 +41,7 @@ create table public.schedule
     taken    text                            not null,
     "filmId" uuid
         constraint "FK_1c2f5e637713a429f4854024a76"
-            references public.film
+            references public.films
 );
 
 alter table public.schedule
