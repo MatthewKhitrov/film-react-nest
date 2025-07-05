@@ -22,13 +22,15 @@ export class filmsDto {
   @IsString()
   description: string;
   @IsArray()
-  schedule: [{
-            daytime:  string;
-            hall: number;
-            id:  string;
-            price: number;
-            rows: number;
-            seats: number;
-            taken:string
-  }];
+  schedule: [
+    {
+      daytime: string;
+      hall: number;
+      id: string;
+      price: number;
+      rows: number;
+      seats: number;
+      taken: string;
+    },
+  ];
 }

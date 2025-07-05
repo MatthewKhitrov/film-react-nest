@@ -4,12 +4,12 @@ import { LoggerService, Injectable } from '@nestjs/common';
 export class TskvLogger implements LoggerService {
   formatMessage(level: string, message: any, ...optionalParams: any[]) {
     const optional = optionalParams
-    ? `optional=${JSON.stringify(optionalParams)}`
-    : '';
+      ? `optional=${JSON.stringify(optionalParams)}`
+      : '';
 
     return [`level=${level}`, `message=${message.replace(/\t/g, '')}`, optional]
-        .filter((data) => data)
-        .join(`\t`)
+      .filter((data) => data)
+      .join(`\t`);
   }
   /**
    * Write a 'log' level log.
@@ -18,7 +18,6 @@ export class TskvLogger implements LoggerService {
     console.log(this.formatMessage('log', message, optionalParams));
   }
 
-  
   error(message: any, ...optionalParams: any[]) {
     console.log(this.formatMessage('fatal', message, optionalParams));
   }

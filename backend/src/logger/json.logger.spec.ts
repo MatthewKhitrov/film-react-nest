@@ -33,7 +33,7 @@ describe('JsonLogger', () => {
   beforeEach(() => {
     // Создаем новый экземпляр логгера перед каждым тестом
     logger = new JsonLogger();
-    
+
     // Мокаем методы console
     consoleSpy = {
       log: jest.spyOn(console, 'log').mockImplementation(() => {}),
@@ -48,8 +48,6 @@ describe('JsonLogger', () => {
     jest.clearAllMocks();
   });
 
-
-
   describe('formatMessage', () => {
     it('should format simple string message', () => {
       // Используем any для доступа к приватному методу
@@ -57,7 +55,7 @@ describe('JsonLogger', () => {
       expect(JSON.parse(result)).toEqual({
         level: 'test',
         message: 'hello world',
-        optionalParams: []
+        optionalParams: [],
       });
     });
 
@@ -67,7 +65,7 @@ describe('JsonLogger', () => {
       expect(JSON.parse(result)).toEqual({
         level: 'test',
         message: obj,
-        optionalParams: []
+        optionalParams: [],
       });
     });
 
@@ -76,7 +74,7 @@ describe('JsonLogger', () => {
       expect(JSON.parse(result)).toEqual({
         level: 'test',
         message: 'msg',
-        optionalParams: ['param1', 2]
+        optionalParams: ['param1', 2],
       });
     });
   });
@@ -85,9 +83,9 @@ describe('JsonLogger', () => {
     it('log() should call console.log with formatted message', () => {
       const message = 'test message';
       logger.log(message);
-      
+
       expect(consoleSpy.log).toHaveBeenCalledTimes(1);
-      
+
       const loggedMessage = JSON.parse(consoleSpy.log.mock.calls[0][0]);
       expect(loggedMessage.level).toBe('log');
       expect(loggedMessage.message).toBe(message);
@@ -96,9 +94,9 @@ describe('JsonLogger', () => {
     it('warn() should call console.warn with formatted message', () => {
       const message = 'warning message';
       logger.warn(message);
-      
+
       expect(consoleSpy.warn).toHaveBeenCalledTimes(1);
-      
+
       const loggedMessage = JSON.parse(consoleSpy.warn.mock.calls[0][0]);
       expect(loggedMessage.level).toBe('warn');
       expect(loggedMessage.message).toBe(message);
@@ -107,9 +105,9 @@ describe('JsonLogger', () => {
     it('debug() should call console.debug with formatted message', () => {
       const message = 'debug message';
       logger.debug(message);
-      
+
       expect(consoleSpy.debug).toHaveBeenCalledTimes(1);
-      
+
       const loggedMessage = JSON.parse(consoleSpy.debug.mock.calls[0][0]);
       expect(loggedMessage.level).toBe('debug');
       expect(loggedMessage.message).toBe(message);
@@ -118,9 +116,9 @@ describe('JsonLogger', () => {
     it('verbose() should call console.log with formatted message', () => {
       const message = 'verbose message';
       logger.verbose(message);
-      
+
       expect(consoleSpy.log).toHaveBeenCalledTimes(1);
-      
+
       const loggedMessage = JSON.parse(consoleSpy.log.mock.calls[0][0]);
       expect(loggedMessage.level).toBe('verbose');
       expect(loggedMessage.message).toBe(message);
@@ -129,9 +127,9 @@ describe('JsonLogger', () => {
     it('fatal() should call console.warn with formatted message', () => {
       const message = 'fatal message';
       logger.fatal(message);
-      
+
       expect(consoleSpy.warn).toHaveBeenCalledTimes(1);
-      
+
       const loggedMessage = JSON.parse(consoleSpy.warn.mock.calls[0][0]);
       expect(loggedMessage.level).toBe('fatal');
       expect(loggedMessage.message).toBe(message);
@@ -140,9 +138,9 @@ describe('JsonLogger', () => {
     it('should handle multiple optional params', () => {
       const params = ['param1', 2, { key: 'value' }];
       logger.log('message', ...params);
-      
+
       expect(consoleSpy.log).toHaveBeenCalledTimes(1);
-      
+
       const loggedMessage = JSON.parse(consoleSpy.log.mock.calls[0][0]);
       expect(loggedMessage.optionalParams).toEqual([params]);
     });

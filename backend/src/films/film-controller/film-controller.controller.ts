@@ -5,13 +5,11 @@ import { FilmsService } from '../film-service/film-service';
 export class FilmControllerController {
   constructor(private readonly filmsService: FilmsService) {}
 
-  @Get() /* GET /api/afisha/films/ */ 
-  findAll() {
+  @Get() /* GET /api/afisha/films/ */ findAll() {
     return this.filmsService.findAll();
   }
 
-  @Get(':id/schedule') /* GET /api/afisha/films/:id/schedule  */ 
-  findOne(
+  @Get(':id/schedule') /* GET /api/afisha/films/:id/schedule  */ findOne(
     @Param('id') id: string,
   ) {
     return this.filmsService.find(id);

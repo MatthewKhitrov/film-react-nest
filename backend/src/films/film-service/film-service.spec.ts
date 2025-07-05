@@ -5,7 +5,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Film } from '../film-schema/film-schema-sql';
 import { Schedule } from '../../order/order-schema/order-schema-sql';
 
-
 describe('FilmService', () => {
   let service: FilmsService;
 
@@ -47,7 +46,7 @@ describe('FilmService', () => {
     const schedule = await service.find(fixtures.film.id);
     expect(schedule).toEqual({
       total: fixtures.film.schedule.length,
-      items: fixtures.film.schedule.map(item => ({
+      items: fixtures.film.schedule.map((item) => ({
         ...item,
         taken: item.taken.split(', '),
       })),

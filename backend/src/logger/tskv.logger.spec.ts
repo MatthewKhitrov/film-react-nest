@@ -15,10 +15,10 @@ describe.only('TskvLogger', () => {
 
   it('should log warn message with optional params in correct format', () => {
     logger.warn('alarm', { a: 'b', c: 1 });
-    
+
     expect(consoleWarnMock).toHaveBeenCalledTimes(1);
     expect(consoleWarnMock).toHaveBeenCalledWith(
-      'level=warn\tmessage=alarm\toptional=[{"a":"b","c":1}]'
+      'level=warn\tmessage=alarm\toptional=[{"a":"b","c":1}]',
     );
   });
 });

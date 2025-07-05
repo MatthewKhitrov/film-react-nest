@@ -5,7 +5,6 @@ import { fixtures } from '../../films.fixtures';
 
 describe('FilmControllerController', () => {
   let controller: FilmControllerController;
-  let filmsService: FilmsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -27,8 +26,7 @@ describe('FilmControllerController', () => {
       ],
     }).compile();
 
-    controller = module.get<FilmControllerController>(FilmControllerController)
-    filmsService = module.get<FilmsService>(FilmsService);
+    controller = module.get<FilmControllerController>(FilmControllerController);
   });
 
   it('test find all', async () => {
@@ -42,16 +40,15 @@ describe('FilmControllerController', () => {
 
   it('test find one', async () => {
     expect(controller).toBeDefined();
-    const findResult = await controller.findOne('0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
+    const findResult = await controller.findOne(
+      '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf',
+    );
     expect(findResult).toEqual({
       total: fixtures.film.schedule.length,
-      items: fixtures.film.schedule.map(item => ({
+      items: fixtures.film.schedule.map((item) => ({
         ...item,
         taken: item.taken.split(', '),
       })),
     });
   });
-  
 });
-
-
