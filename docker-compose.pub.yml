@@ -2,6 +2,7 @@ services:
   database:
     image: postgres:16.4
     command: postgres
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -38,6 +39,7 @@ services:
 
   frontend:
     image: ghcr.io/matthewkhitrov/sp18_frontend:latest
+    restart: on-failure
     environment:
       VITE_BASE_URL: /
       VITE_API_URL: /api/afisha
@@ -47,6 +49,7 @@ services:
 
   backend:
     image: ghcr.io/matthewkhitrov/sp18_backend:latest
+    restart: unless-stopped
     environment:
       PORT: 3000
       DEBUG: "*"
@@ -66,6 +69,7 @@ services:
 
   server:
     image: ghcr.io/matthewkhitrov/sp18_server:latest
+    restart: always
     ports:
       - 81:80
     volumes:

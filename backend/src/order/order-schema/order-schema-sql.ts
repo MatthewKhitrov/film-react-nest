@@ -3,35 +3,35 @@ import { Film } from '../../films/film-schema/film-schema-sql';
 
 @Entity('schedules')
 export class Schedule {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    filmId: string;
+  @Column()
+  filmId: string;
 
-    @Column()
-    daytime: Date;
+  @Column()
+  daytime: Date;
 
-    @Column()
-    hall: number;
+  @Column()
+  hall: number;
 
-    @Column()
-    price: number;
+  @Column()
+  price: number;
 
-    @Column()
-    rows: number;
+  @Column()
+  rows: number;
 
-    @Column()
-    seats: number;
+  @Column()
+  seats: number;
 
-    @Column('text', { nullable: true })
-    taken: string;
+  @Column('text', { nullable: true })
+  taken: string;
 
-    @ManyToOne(() => Film, film => film.schedules)
-    film: Film;
-  schedule: any;
+  @ManyToOne(() => Film, (film) => film.schedules)
+  film: Film;
+  schedule: unknown;
 
-    constructor(schedule: Partial<Schedule>) {
-        Object.assign(this, schedule)
-    }
+  constructor(schedule: Partial<Schedule>) {
+    Object.assign(this, schedule);
+  }
 }
