@@ -6,7 +6,7 @@ import { ordersDto } from '../dto/order.dto';
 export class OrderControllerController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @Post() 
+  @Post()
   createOrder(@Body() OrderDto: ordersDto) {
     return this.ordersService.createOrder(OrderDto);
   }

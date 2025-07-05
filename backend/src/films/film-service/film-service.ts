@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Film } from '../film-schema/film-schema-sql';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Schedule } from 'src/order/order-schema/order-schema-sql';
+import { Schedule } from '../../order/order-schema/order-schema-sql';
 
 @Injectable()
 export class FilmsService {
@@ -11,7 +11,7 @@ export class FilmsService {
     private filmRepository: Repository<Film>,
     @InjectRepository(Schedule)
     private scheduleRepository: Repository<Schedule>,
-  ){}
+  ) {}
 
   async findAll() {
     const films = await this.filmRepository.find();

@@ -9,8 +9,8 @@ export class filmsDto {
   rating: number;
   @IsString()
   director: string;
-  @IsArray()
-  tags: [];
+  @IsString()
+  tags: string;
   @IsString()
   Image: string;
   @IsString()
@@ -22,5 +22,15 @@ export class filmsDto {
   @IsString()
   description: string;
   @IsArray()
-  schedule: [];
+  schedule: [
+    {
+      daytime: string;
+      hall: number;
+      id: string;
+      price: number;
+      rows: number;
+      seats: number;
+      taken: string;
+    },
+  ];
 }

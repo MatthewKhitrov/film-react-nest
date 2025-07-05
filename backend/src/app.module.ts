@@ -6,7 +6,6 @@ import { FilmsModule } from './films/film-module/film-module';
 import { OrdersModule } from './order/order-module/order-module';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import dotenv from 'dotenv';
 import { Film } from './films/film-schema/film-schema-sql';
 import { Schedule } from './order/order-schema/order-schema-sql';
 
