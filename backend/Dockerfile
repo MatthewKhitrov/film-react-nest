@@ -28,9 +28,8 @@ RUN npm ci --only=production
 
 # Копируем собранные файлы из этапа builder
 COPY --from=builder /app/dist ./dist
-
-# Удаляем исходные файлы и ненужные зависимости
-RUN rm -rf src node_modules package-lock.json
+# Копируем node_modules с production зависимостями
+COPY --from=builder /app/node_modules ./node_modules
 
 # Стартовая команда
 CMD ["node", "dist/main.js"]
