@@ -28,6 +28,8 @@ RUN npm ci --only=production
 
 # Копируем собранные файлы из этапа builder
 COPY --from=builder /app/dist ./dist
+# Копируем статические файлы
+COPY --from=builder /app/public ./public
 # Копируем node_modules с production зависимостями
 COPY --from=builder /app/node_modules ./node_modules
 
